@@ -1,0 +1,43 @@
+#!/bin/bash -e
+
+
+ENV="mtuq"
+SRC="$HOME/packages/mtuq"
+ORIGIN="https://github.com/rmodrak/mtuq.git"
+UPSTREAM="https://github.com/uafgeotools/mtuq.git"
+CONDA="$HOME/packages/miniconda3"
+
+
+if ! type conda > /dev/null; then
+    echo "conda not found. Exiting..."
+    exit
+fi
+
+
+source "$CONDA/etc/profile.d/conda.sh"
+conda create --name $ENV python=3.5
+conda activate $ENV
+
+
+if [ -e $SRC ]; then
+    echo "Repository exists: $SRC"
+    cd $SRC
+
+else
+    echo "Cloning: $ORIGIN"
+    git clone $ORIGIN $SRC
+    cd $SRC
+    git remote add upstream $UPSTREAM
+
+fi
+
+
+conda install numpy
+pip install -e .
+
+./data/examples/unpack.bash
+./data/tests/unpack.bash
+
+find $CONDA/envs/mtuq/ -name matplotlibrc -exec sed -i '' \
+    's/backend: macosx/backend: Agg/' {} +
+
