@@ -15,7 +15,8 @@ fi
 
 
 source "$CONDA/etc/profile.d/conda.sh"
-conda create --name $ENV python=3.5
+conda config --prepend channels conda-forge
+conda create --name $ENV python=3.6
 conda activate $ENV
 
 
@@ -32,7 +33,9 @@ else
 fi
 
 
-conda install numpy
+conda install numpy 
+conda install gmt=6.0.0
+pip install mpi4py
 pip install -e .
 
 ./data/examples/unpack.bash

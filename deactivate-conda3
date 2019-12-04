@@ -13,4 +13,4 @@ CONDA3="$HOME/packages/miniconda3"
 conda deactivate
 remove-path "$CONDA3/bin"
 remove-path "$CONDA3/condabin"
-
+unset conda
