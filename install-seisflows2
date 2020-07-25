@@ -1,0 +1,95 @@
+#!/bin/bash -e
+
+
+function check_src_path {
+    if [ -e $1 ]; then
+        echo
+        echo "A file or directory already exists here:"
+        echo "  $1"
+        echo ""
+        echo "Exiting..."
+        echo
+        return 1
+    fi
+}
+
+
+function resolve_path {
+    WD=$PWD
+    cd $1
+    echo $PWD
+    cd $WD
+}
+
+
+function write_script {
+    ENV=$1
+    SRC=$(resolve_path $2)
+
+    SCRIPT=$SRC/activate.bash
+    touch $SCRIPT
+    chmod u+x $SCRIPT
+
+    echo 'if [ "${BASH_SOURCE[0]}" == "${0}" ]; then echo "This script must be sourced"; exit 1; fi' >> $SCRIPT
+    echo 'source activate-conda2' >> $SCRIPT
+    echo "conda activate $ENV" >> $SCRIPT
+    echo 'export SEISFLOWS=$(realpath $(dirname ${BASH_SOURCE[0]}))' >> $SCRIPT
+    echo 'export PATH=${PATH:+${PATH}:}"${SEISFLOWS}/scripts"' >> $SCRIPT
+    echo 'export PYTHONPATH=${PYTHONPATH:+${PYTHONPATH}:}"${SEISFLOWS}"' >> $SCRIPT
+    echo 'export PYTHONUNBUFFERED="True"' >> $SCRIPT
+}
+
+
+#
+# DEFAULT LOCATIONS - MODIFY AS DESIRED
+#
+ENV="sf-scal"
+SRC="$HOME/devel/seisflows/scal"
+
+
+#
+# INSTALLATION STARTS NOW
+#
+
+echo ""
+echo "Conda environment will be created at:"
+echo "$ENV"
+echo ""
+
+echo ""
+echo "Source code will be cloned at:"
+echo $SRC
+echo ""
+
+while true; do
+    read -p "Proceed ([y]/n)? " input
+    echo
+    case $input in
+        [Yy]* ) break;;
+        "" ) break;;
+        [Nn]* ) return;;
+    esac
+done
+
+if ! check_src_path $SRC ; then return $?; fi
+
+mkdir -p $(dirname $SRC)
+
+
+# create virtual environment
+source ~/scripts/conda/activate-conda2
+conda config --prepend channels conda-forge
+conda create --name $ENV python=2.7
+conda activate $ENV
+conda install numpy obspy mpi4py
+
+# clone source code
+BRANCH="--branch stable"
+REMOTE="https://github.com/rmodrak/seisflows.git"
+git clone $BRANCH $REMOTE $SRC
+
+
+# copy activation script
+write_script $ENV $SRC
+
+
