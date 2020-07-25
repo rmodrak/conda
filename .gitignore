@@ -1,4 +1,6 @@
+activate-conda
 activate-miniconda2
 activate-miniconda3
+deactivate-conda
 deactivate-miniconda2
 deactivate-miniconda3
