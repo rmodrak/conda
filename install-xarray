@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+
+ENV="xarray"
+CONDA="$HOME/virtual/miniconda3"
+
+
+if ! type conda > /dev/null; then
+    echo "conda not found. Exiting..."
+    exit
+fi
+
+
+source "$CONDA/etc/profile.d/conda.sh"
+conda create --name $ENV python=3
+conda activate $ENV
+
+
+conda install xarray
+
