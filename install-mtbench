@@ -28,9 +28,8 @@ else
 fi
 
 
-conda install numpy 
+conda install numpy obspy instaseis utm
 conda install gmt=6.0.0
-pip install instaseis
 pip install mpi4py
 pip install -e .
 

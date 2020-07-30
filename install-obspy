@@ -16,5 +16,5 @@ conda create --name $ENV python=3
 conda activate $ENV
 
 
-conda install obspy
+conda install obspy utm
 
