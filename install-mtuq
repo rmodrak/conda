@@ -5,7 +5,7 @@ ENV="mtuq"
 SRC="$HOME/packages/mtuq"
 ORIGIN="https://github.com/rmodrak/mtuq.git"
 UPSTREAM="https://github.com/uafgeotools/mtuq.git"
-CONDA="$HOME/packages/miniconda3"
+CONDA="$HOME/virtual/miniconda3"
 
 
 if ! type conda > /dev/null; then
@@ -33,7 +33,7 @@ else
 fi
 
 
-conda install numpy obspy intsaseis utm
+conda install numpy obspy instaseis utm
 conda install gmt=6.0.0
 pip install mpi4py
 pip install -e .

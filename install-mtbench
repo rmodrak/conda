@@ -2,8 +2,8 @@
 
 
 ENV="mtbench"
-SRC="$HOME/packages/mtuq"
-CONDA="$HOME/packages/miniconda3"
+SRC="$HOME/virtual/mtuq"
+CONDA="$HOME/virtual/miniconda3"
 
 
 if ! type conda > /dev/null; then
