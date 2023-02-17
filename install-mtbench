@@ -2,8 +2,8 @@
 
 
 ENV="mtbench"
-SRC="$HOME/virtual/mtuq"
-CONDA="$HOME/virtual/miniconda3"
+SRC="$HOME/packages/mtuq"
+CONDA="$HOME/packages/miniconda3"
 
 
 if ! type conda > /dev/null; then
@@ -14,7 +14,7 @@ fi
 
 source "$CONDA/etc/profile.d/conda.sh"
 conda config --prepend channels conda-forge
-conda create --name $ENV python=3.6
+conda create --name $ENV python=3
 conda activate $ENV
 
 
@@ -28,10 +28,9 @@ else
 fi
 
 
-conda install numpy obspy instaseis utm
-conda install gmt=6.0.0
-pip install mpi4py
-pip install -e .
+conda env update --name $ENV --file env.yaml
+conda develop .
+conda install gmt=6.3
 
 
 echo "
