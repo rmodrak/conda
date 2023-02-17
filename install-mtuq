@@ -34,7 +34,7 @@ fi
 
 
 conda env update --name $ENV --file env.yaml
-#conda install pygmt
+conda install pygmt
 
 ./data/examples/unpack.bash
 ./data/tests/unpack.bash
