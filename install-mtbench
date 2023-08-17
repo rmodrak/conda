@@ -2,7 +2,7 @@
 
 
 ENV="mtbench"
-SRC="$HOME/packages/mtuq"
+SRC="$HOME/devel/mtuq"
 CONDA="$HOME/virtual/miniconda3"
 
 

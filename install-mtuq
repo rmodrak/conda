@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 
-ENV="mtuq"
-SRC="$HOME/packages/mtuq"
+ENV="mtuq2"
+SRC="$HOME/devel/mtuq"
 ORIGIN="https://github.com/rmodrak/mtuq.git"
 UPSTREAM="https://github.com/uafgeotools/mtuq.git"
 CONDA="$HOME/virtual/miniconda3"
@@ -33,6 +33,7 @@ else
 fi
 
 
+pip install --upgrade pip
 conda env update --name $ENV --file env.yaml
 conda install pygmt
 
