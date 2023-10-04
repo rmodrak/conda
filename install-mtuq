@@ -1,11 +1,14 @@
 #!/bin/bash -e
 
 
-ENV="mtuq2"
+ENV="mtuq"
 SRC="$HOME/devel/mtuq"
+
 ORIGIN="https://github.com/rmodrak/mtuq.git"
 UPSTREAM="https://github.com/uafgeotools/mtuq.git"
+
 CONDA="$HOME/virtual/miniconda3"
+PYGMT='pygmt>=0.9'
 
 
 if ! type conda > /dev/null; then
@@ -35,7 +38,7 @@ fi
 
 pip install --upgrade pip
 conda env update --name $ENV --file env.yaml
-conda install pygmt
+conda install $PYGMT
 
 ./data/examples/unpack.bash
 ./data/tests/unpack.bash
